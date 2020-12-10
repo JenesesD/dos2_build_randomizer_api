@@ -10,19 +10,21 @@
 # original character, I would recommend choosing that-
 # eg.: A non-undead male lizard could represent the Red Prince etc.
 
+from random import choice, choices
+
 GENDER = ["Male", "Female"]
 # Eternal is not present for a reason, there is no such thing when
 # you create a character
 RACE = ["Human", "Elf", "Dwarf", "Lizard"]
-UNDEAD["Yes", "No"]
+UNDEAD = ["Yes", "No"]
 ATTRIBUTES = ["strength", "Finesse", "Intelligence",
               "Constitution", "Memory", "Wits"]  # need 3
 ABILITIES = ["Dual Wielding", "Ranged", "Single-Handed", "Two-Handed",
              "Leadership", "Perserverence", "Retribution", "Aerotheurge", "Geomancer",
              "Huntsman", "Hydrosophist", "Necromancer", "Polymorph", "Pyrokinetic",
              "Scoundrel", "Summoning"]
-CIVIL_ABILITIES = ["Telkinesis", "Loremaster", "Sneaking", "Thievery", "Bartering"
-                   "persuasion", "Lucky Charm"]  # need 2
+CIVIL_ABILITIES = ["Telkinesis", "Loremaster", "Sneaking", "Thievery", "Bartering",
+                   "Persuasion", "Lucky Charm"]  # need 2
 TALENTS = ["All Skilled Up", "Ambidextrous", "Arrow Recovery", "Bigger and better",
            "Comeback Kid", "Demon", "Duck Duck Goose", "Elemental Affinity", "Escapist", "Executioner",
            "Elemental Ranger", "Far Out Man", "Five-Star Diner", "Glass Cannon", "Guerrilla",
@@ -31,13 +33,23 @@ TALENTS = ["All Skilled Up", "Ambidextrous", "Arrow Recovery", "Bigger and bette
            "Stench", "The Pawn", "Torturer", "Unstable", "Walk It Off", "What a Rush"]
 
 
+def character_generator():
+    print(f"\nCharacter Gender: {choice(GENDER)}")
+    print(f"\nCharacter Race: {choice(RACE)}")
+    print(f"\nUndead: {choice(UNDEAD)}")
+    print(f"\nAttributes: {', '.join(choices(ATTRIBUTES, k=3))}")
+    print(f"\nAbilities: {', '.join(choices(ABILITIES, k=2))}")
+    print(f"\nCivil Abilities: {', '.join(choices(CIVIL_ABILITIES, k=2))}")
+    print(f"\nTalent: {choice(TALENTS)}")
+
+
 def main():
     print(f"(1) Generate Character")
     print(f"(2) Draw Talent")
     print(f"(3) Exit")
     user_input = input("Choose an option: ")
     if user_input == "1":
-        pass
+        character_generator()
     elif user_input == "2":
         pass
     else:
