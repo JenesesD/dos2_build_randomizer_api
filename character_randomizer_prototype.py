@@ -10,7 +10,7 @@
 # original character, I would recommend choosing that.
 # eg.: A non-undead male lizard could represent the Red Prince etc.
 
-from random import choice, choices
+from random import choice, choices, randint
 
 GENDER = ["Male", "Female"]
 # Eternal is not present for a reason, there is no such thing when
@@ -20,8 +20,7 @@ RACE = ["Human", "Elf", "Dwarf", "Lizard",
         "Undead Human", "Undead Elf", "Undead Dwarf", "Undead Lizard"]
 
 # For attributes and abilities duplicates is still possible
-ATTRIBUTES = ["strength", "Finesse", "Intelligence",
-              "Constitution", "Memory", "Wits"]  # need 3
+
 ABILITIES = ["Dual Wielding", "Ranged", "Single-Handed", "Two-Handed",
              "Leadership", "Perserverence", "Retribution", "Aerotheurge", "Geomancer",
              "Huntsman", "Hydrosophist", "Necromancer", "Polymorph", "Pyrokinetic",
@@ -50,20 +49,37 @@ def character_generator(chr_number=1):
         print("----------------------------")
         print(f"\nCharacter Gender: {choice(GENDER)}")
         print(f"\nCharacter Race: {choice(RACE)}")
-        print(f"\nAttributes: {', '.join(choices(ATTRIBUTES, k=3))}")
+        # Seperate function for generating attributes
+        print(f"\nAttributes: {', '.join(generate_attributes())}")
         print(f"\nAbilities: {', '.join(choices(ABILITIES, k=2))}")
         print(f"\nCivil Abilities: {', '.join(choices(CIVIL_ABILITIES, k=2))}")
         print(f"\nTalent: {choice(TALENTS)}")
         print(f"===========================\n")
 
 
+def generate_attributes():
+    # moved ATTRIBUTES list within scope in order to prevent IndexError
+    ATTRIBUTES = ["Strength", "Finesse", "Intelligence",
+                  "Constitution", "Memory", "Wits"]
+    # 3 attributes is required
+    picked_attributes = []
+    # switched to while if there is a duplicate value
+    while len(picked_attributes) != 3:
+        index = randint(0, len(ATTRIBUTES) - 1)
+        curr_attribute = ATTRIBUTES[index]
+        if curr_attribute not in picked_attributes:
+            picked_attributes.append(curr_attribute)
+    return picked_attributes
+
+
 def pick_talent():
-    # Really simple random pick in talents
+    # Really simple random pick from talents
     print(f"\nYour next talent: {choice(TALENTS)}")
 
 
 def check_number_input(chr_number):
-    return chr_number != "" or not chr_number.isalpha()
+    # Modified logic to prevent a semantic error
+    return chr_number.isnumeric()
 
 
 def main():
@@ -82,9 +98,9 @@ def main():
             chr_number = input("How many characters would you like: ")
             # if no or wrong input is given the function runs once by default
             if check_number_input(chr_number):
-                character_generator()
-            else:
                 character_generator(int(chr_number))
+            else:
+                character_generator()
         elif user_input == "2":
             pick_talent()
         elif user_input == "3":
