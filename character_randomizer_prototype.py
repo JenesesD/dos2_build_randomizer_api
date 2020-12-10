@@ -44,6 +44,9 @@ TALENTS = ["All Skilled Up", "Ambidextrous", "Arrow Recovery", "Bigger and bette
 
 
 def character_generator():
+    # Generates a character with no regard to any rules
+    # Need to create seperate functions in order to prevent duplicates
+    # Maybe modify the function to run as many times as the user inputs
     print(f"\nCharacter Gender: {choice(GENDER)}")
     print(f"\nCharacter Race: {choice(RACE)}")
     print(f"\nUndead: {choice(UNDEAD)}")
@@ -54,16 +57,21 @@ def character_generator():
 
 
 def pick_talent():
+    # Really simple random pick in talents
     print(f"\nYour next talent: {choice(TALENTS)}")
 
 
 def main():
+    # While loop in order for the script to not stop on wrong input or after one execution
     run = True
     while run:
+        # Three options: generate a starting character, generate a random talent, or exit the program
         print(f"(1) Generate Character")
         print(f"(2) Draw Talent")
         print(f"(3) Exit")
+        # Asks for an user input in order to determine the function to run
         user_input = input("Choose an option: ")
+        # Checks the given input by the user
         if user_input == "1":
             character_generator()
         elif user_input == "2":
