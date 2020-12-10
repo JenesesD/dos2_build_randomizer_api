@@ -58,16 +58,22 @@ def pick_talent():
 
 
 def main():
-    print(f"(1) Generate Character")
-    print(f"(2) Draw Talent")
-    print(f"(3) Exit")
-    user_input = input("Choose an option: ")
-    if user_input == "1":
-        character_generator()
-    elif user_input == "2":
-        pick_talent()
-    else:
-        pass
+    run = True
+    while run:
+        print(f"(1) Generate Character")
+        print(f"(2) Draw Talent")
+        print(f"(3) Exit")
+        user_input = input("Choose an option: ")
+        if user_input == "1":
+            character_generator()
+        elif user_input == "2":
+            pick_talent()
+        elif user_input == "3":
+            # either option works
+            run = False
+            # exit()
+        else:
+            print(f"Wrong Input!")
 
 
 if __name__ == "__main__":
