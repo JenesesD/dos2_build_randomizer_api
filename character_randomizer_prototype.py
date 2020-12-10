@@ -29,3 +29,20 @@ TALENTS = ["All Skilled Up", "Ambidextrous", "Arrow Recovery", "Bigger and bette
            "Hothead", "Ice King", "Leech", "Living Armour", "Lonewolf", "Mnemonic", "Morning Person",
            "Opportunist", "Parry Master", "Pet Pal", "Picture of Health", "Savage Sortilege", "Slingshot",
            "Stench", "The Pawn", "Torturer", "Unstable", "Walk It Off", "What a Rush"]
+
+
+def main():
+    print(f"(1) Generate Character")
+    print(f"(2) Draw Talent")
+    print(f"(3) Exit")
+    user_input = input("Choose an option: ")
+    if user_input == "1":
+        pass
+    elif user_input == "2":
+        pass
+    else:
+        pass
+
+
+if __name__ == "__main__":
+    main()
