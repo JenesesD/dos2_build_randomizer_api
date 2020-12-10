@@ -1,6 +1,6 @@
 # For the prototype, I will create a complete randomizer for the game.
 # After creating the base of the api, I will try to apply a ruleset,
-# so it doesn't necceserily create a completely useless build.
+# so it creates a build within the realm of possibility.
 # Since this is the prototype (and for the sake of practice),
 # I will re-create it in Java ruleset and all, and try to make it into
 # an API, for future uses (Discord bot, maybe a React based website)
@@ -10,71 +10,78 @@
 # original character, I would recommend choosing that.
 # eg.: A non-undead male lizard could represent the Red Prince etc.
 
-from random import choice, choices, randint
-
-GENDER = ["Male", "Female"]
-# Eternal is not present for a reason, there is no such thing when
-# you create a character
-# modified the list so undead doesn't need a seperate list
-RACE = ["Human", "Elf", "Dwarf", "Lizard",
-        "Undead Human", "Undead Elf", "Undead Dwarf", "Undead Lizard"]
-
-# For attributes and abilities duplicates is still possible
-
-ABILITIES = ["Dual Wielding", "Ranged", "Single-Handed", "Two-Handed",
-             "Leadership", "Perserverence", "Retribution", "Aerotheurge", "Geomancer",
-             "Huntsman", "Hydrosophist", "Necromancer", "Polymorph", "Pyrokinetic",
-             "Scoundrel", "Summoning"]  # need 3
-CIVIL_ABILITIES = ["Telekinesis", "Loremaster", "Sneaking", "Thievery", "Bartering",
-                   "Persuasion", "Lucky Charm"]  # need 2
-
-# Talents are random, it is possible to get the same talents after multiple draws,
-# if and when the problem arises rolling another talent will be the solution,
-# another idea could be to roll all the players talent that they need to learn throughout the game
-# (would require extensive ruleset, maybe in the future).
-TALENTS = ["All Skilled Up", "Ambidextrous", "Arrow Recovery", "Bigger and better",
-           "Comeback Kid", "Demon", "Duck Duck Goose", "Elemental Affinity", "Escapist", "Executioner",
-           "Elemental Ranger", "Far Out Man", "Five-Star Diner", "Glass Cannon", "Guerrilla",
-           "Hothead", "Ice King", "Leech", "Living Armour", "Lonewolf", "Mnemonic", "Morning Person",
-           "Opportunist", "Parry Master", "Pet Pal", "Picture of Health", "Savage Sortilege", "Slingshot",
-           "Stench", "The Pawn", "Torturer", "Unstable", "Walk It Off", "What a Rush"]
+from random import choice, randint
 
 
 def character_generator(chr_number=1):
     # Generates a character with no regard to any rules
-    # Need to create seperate functions in order to prevent duplicates
-    # modified the function to run as many times as the given parameter
-    for i in range(chr_number):
-        print(f"\nCHARACTER {i + 1}")
-        print("----------------------------")
-        print(f"\nCharacter Gender: {choice(GENDER)}")
-        print(f"\nCharacter Race: {choice(RACE)}")
-        # Seperate function for generating attributes
-        print(f"\nAttributes: {', '.join(generate_attributes())}")
-        print(f"\nAbilities: {', '.join(choices(ABILITIES, k=2))}")
-        print(f"\nCivil Abilities: {', '.join(choices(CIVIL_ABILITIES, k=2))}")
-        print(f"\nTalent: {choice(TALENTS)}")
-        print(f"===========================\n")
+    # Created a general function for picking attributes/abilities
+    # Modified the function to run as many times as the given parameter
 
+    GENDER = ["Male", "Female"]
+    # Eternal is not present
+    # modified the list so undead doesn't need a seperate list
 
-def generate_attributes():
-    # moved ATTRIBUTES list within scope in order to prevent IndexError
+    RACE = ["Human", "Elf", "Dwarf", "Lizard",
+            "Undead Human", "Undead Elf", "Undead Dwarf", "Undead Lizard"]
+
+    # moved all list within scope for generalization
     ATTRIBUTES = ["Strength", "Finesse", "Intelligence",
                   "Constitution", "Memory", "Wits"]
-    # 3 attributes is required
-    picked_attributes = []
+
+    # For attributes and abilities duplicates are not possible anymore
+    ABILITIES = ["Dual Wielding", "Ranged", "Single-Handed", "Two-Handed", "Leadership", "Perserverance",
+                 "Retribution", "Aerotheurge", "Geomancer", "Huntsman", "Hydrosophist", "Necromancer", "Polymorph",
+                 "Pyrokinetic", "Scoundrel", "Summoning", "Warfare"]  # need 2
+
+    CIVIL_ABILITIES = ["Telekinesis", "Loremaster", "Sneaking", "Thievery", "Bartering",
+                       "Persuasion", "Lucky Charm"]  # need 2
+
+    # An idea could be to roll all the players talents that they need to learn throughout the game
+    # (would require extensive ruleset, maybe in the future).
+    TALENTS = ["All Skilled Up", "Ambidextrous", "Arrow Recovery", "Bigger and better",
+               "Comeback Kid", "Demon", "Duck Duck Goose", "Elemental Affinity", "Escapist", "Executioner",
+               "Elemental Ranger", "Far Out Man", "Five-Star Diner", "Glass Cannon", "Guerrilla",
+               "Hothead", "Ice King", "Leech", "Living Armour", "Lonewolf", "Mnemonic", "Morning Person",
+               "Opportunist", "Parry Master", "Pet Pal", "Picture of Health", "Savage Sortilege", "Slingshot",
+               "Stench", "The Pawn", "Torturer", "Unstable", "Walk It Off", "What a Rush"]
+
+    for i in range(chr_number):
+        print(f"\nCHARACTER {i + 1}")
+        print(f"===========================")
+        print(f"\nCharacter Gender: {choice(GENDER)}")
+        print(f"\nCharacter Race: {choice(RACE)}")
+        print(f"\nAttributes: {', '.join(pick_stats(ATTRIBUTES, 3))}")
+        print(f"\nAbilities: {', '.join(pick_stats(ABILITIES, 2))}")
+        print(
+            f"\nCivil Abilities: {', '.join(pick_stats(CIVIL_ABILITIES, 2))}")
+        print(f"\nTalent: {''.join((TALENTS, 1))}")
+        print("----------------------------\n")
+
+
+def pick_stats(stats_list, amount):
+    picked_stats = []
     # switched to while if there is a duplicate value
-    while len(picked_attributes) != 3:
-        index = randint(0, len(ATTRIBUTES) - 1)
-        curr_attribute = ATTRIBUTES[index]
-        if curr_attribute not in picked_attributes:
-            picked_attributes.append(curr_attribute)
-    return picked_attributes
+    while len(picked_stats) != amount:
+        index = randint(0, len(stats_list) - 1)
+        curr_stat = stats_list[index]
+        if curr_stat not in picked_stats:
+            picked_stats.append(curr_stat)
+    return picked_stats
 
 
 def pick_talent():
+    # Not exactly the best solution, since TALENTS is now a duplicate,
+    # have to think of a better solution
+    TALENTS = ["All Skilled Up", "Ambidextrous", "Arrow Recovery", "Bigger and better",
+               "Comeback Kid", "Demon", "Duck Duck Goose", "Elemental Affinity", "Escapist", "Executioner",
+               "Elemental Ranger", "Far Out Man", "Five-Star Diner", "Glass Cannon", "Guerrilla",
+               "Hothead", "Ice King", "Leech", "Living Armour", "Lonewolf", "Mnemonic", "Morning Person",
+               "Opportunist", "Parry Master", "Pet Pal", "Picture of Health", "Savage Sortilege", "Slingshot",
+               "Stench", "The Pawn", "Torturer", "Unstable", "Walk It Off", "What a Rush"]
+
     # Really simple random pick from talents
-    print(f"\nYour next talent: {choice(TALENTS)}")
+    print(f"\nYour next talent: {choice(TALENTS)}\n")
 
 
 def check_number_input(chr_number):
@@ -104,6 +111,7 @@ def main():
         elif user_input == "2":
             pick_talent()
         elif user_input == "3":
+            print(f"See you later!")
             # either option works
             run = False
             # exit()
