@@ -28,7 +28,7 @@ ABILITIES = ["Dual Wielding", "Ranged", "Single-Handed", "Two-Handed",
              "Leadership", "Perserverence", "Retribution", "Aerotheurge", "Geomancer",
              "Huntsman", "Hydrosophist", "Necromancer", "Polymorph", "Pyrokinetic",
              "Scoundrel", "Summoning"]  # need 3
-CIVIL_ABILITIES = ["Telkinesis", "Loremaster", "Sneaking", "Thievery", "Bartering",
+CIVIL_ABILITIES = ["Telekinesis", "Loremaster", "Sneaking", "Thievery", "Bartering",
                    "Persuasion", "Lucky Charm"]  # need 2
 
 # Talents are random, it is possible to get the same talents after multiple draws,
@@ -43,17 +43,21 @@ TALENTS = ["All Skilled Up", "Ambidextrous", "Arrow Recovery", "Bigger and bette
            "Stench", "The Pawn", "Torturer", "Unstable", "Walk It Off", "What a Rush"]
 
 
-def character_generator():
+def character_generator(chr_number=1):
     # Generates a character with no regard to any rules
     # Need to create seperate functions in order to prevent duplicates
-    # Maybe modify the function to run as many times as the user inputs
-    print(f"\nCharacter Gender: {choice(GENDER)}")
-    print(f"\nCharacter Race: {choice(RACE)}")
-    print(f"\nUndead: {choice(UNDEAD)}")
-    print(f"\nAttributes: {', '.join(choices(ATTRIBUTES, k=3))}")
-    print(f"\nAbilities: {', '.join(choices(ABILITIES, k=2))}")
-    print(f"\nCivil Abilities: {', '.join(choices(CIVIL_ABILITIES, k=2))}")
-    print(f"\nTalent: {choice(TALENTS)}")
+    # modified the function to run as many times as the given parameter
+    for i in range(chr_number):
+        print(f"\nCHARACTER {i + 1}")
+        print("----------------------------")
+        print(f"\nCharacter Gender: {choice(GENDER)}")
+        print(f"\nCharacter Race: {choice(RACE)}")
+        print(f"\nUndead: {choice(UNDEAD)}")
+        print(f"\nAttributes: {', '.join(choices(ATTRIBUTES, k=3))}")
+        print(f"\nAbilities: {', '.join(choices(ABILITIES, k=2))}")
+        print(f"\nCivil Abilities: {', '.join(choices(CIVIL_ABILITIES, k=2))}")
+        print(f"\nTalent: {choice(TALENTS)}")
+        print(f"===========================\n")
 
 
 def pick_talent():
@@ -73,7 +77,12 @@ def main():
         user_input = input("Choose an option: ")
         # Checks the given input by the user
         if user_input == "1":
-            character_generator()
+            # Modification in order to generate multiple starter characters
+            chr_number = input("How many characters would you like: ")
+            if chr_number == "" or chr_number.isalpha():
+                character_generator()
+            else:
+                character_generator(int(chr_number))
         elif user_input == "2":
             pick_talent()
         elif user_input == "3":
