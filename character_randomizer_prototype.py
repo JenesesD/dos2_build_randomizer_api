@@ -7,7 +7,7 @@
 # (this will be present in the readme, aswell as how to use the api)
 
 # If the randomizer creates a variation that can represent an
-# original character, I would recommend choosing that-
+# original character, I would recommend choosing that.
 # eg.: A non-undead male lizard could represent the Red Prince etc.
 
 from random import choice, choices
@@ -65,6 +65,10 @@ def pick_talent():
     print(f"\nYour next talent: {choice(TALENTS)}")
 
 
+def check_number_input(chr_number):
+    return chr_number != "" or not chr_number.isalpha()
+
+
 def main():
     # While loop in order for the script to not stop on wrong input or after one execution
     run = True
@@ -79,7 +83,8 @@ def main():
         if user_input == "1":
             # Modification in order to generate multiple starter characters
             chr_number = input("How many characters would you like: ")
-            if chr_number == "" or chr_number.isalpha():
+            # if no or wrong input is given the function runs once by default
+            if check_number_input(chr_number):
                 character_generator()
             else:
                 character_generator(int(chr_number))
