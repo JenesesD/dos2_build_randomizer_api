@@ -15,11 +15,9 @@ from random import choice, choices
 GENDER = ["Male", "Female"]
 # Eternal is not present for a reason, there is no such thing when
 # you create a character
-RACE = ["Human", "Elf", "Dwarf", "Lizard"]
-
-# For the time being getting an undead character or not will be
-# decided like this
-UNDEAD = ["Yes", "No"]
+# modified the list so undead doesn't need a seperate list
+RACE = ["Human", "Elf", "Dwarf", "Lizard",
+        "Undead Human", "Undead Elf", "Undead Dwarf", "Undead Lizard"]
 
 # For attributes and abilities duplicates is still possible
 ATTRIBUTES = ["strength", "Finesse", "Intelligence",
@@ -52,7 +50,6 @@ def character_generator(chr_number=1):
         print("----------------------------")
         print(f"\nCharacter Gender: {choice(GENDER)}")
         print(f"\nCharacter Race: {choice(RACE)}")
-        print(f"\nUndead: {choice(UNDEAD)}")
         print(f"\nAttributes: {', '.join(choices(ATTRIBUTES, k=3))}")
         print(f"\nAbilities: {', '.join(choices(ABILITIES, k=2))}")
         print(f"\nCivil Abilities: {', '.join(choices(CIVIL_ABILITIES, k=2))}")
