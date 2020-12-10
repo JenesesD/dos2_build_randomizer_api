@@ -39,12 +39,6 @@ def character_generator(chr_number=1):
 
     # An idea could be to roll all the players talents that they need to learn throughout the game
     # (would require extensive ruleset, maybe in the future).
-    TALENTS = ["All Skilled Up", "Ambidextrous", "Arrow Recovery", "Bigger and better",
-               "Comeback Kid", "Demon", "Duck Duck Goose", "Elemental Affinity", "Escapist", "Executioner",
-               "Elemental Ranger", "Far Out Man", "Five-Star Diner", "Glass Cannon", "Guerrilla",
-               "Hothead", "Ice King", "Leech", "Living Armour", "Lonewolf", "Mnemonic", "Morning Person",
-               "Opportunist", "Parry Master", "Pet Pal", "Picture of Health", "Savage Sortilege", "Slingshot",
-               "Stench", "The Pawn", "Torturer", "Unstable", "Walk It Off", "What a Rush"]
 
     for i in range(chr_number):
         print(f"\nCHARACTER {i + 1}")
@@ -55,7 +49,7 @@ def character_generator(chr_number=1):
         print(f"\nAbilities: {', '.join(pick_stats(ABILITIES, 2))}")
         print(
             f"\nCivil Abilities: {', '.join(pick_stats(CIVIL_ABILITIES, 2))}")
-        print(f"\nTalent: {''.join((TALENTS, 1))}")
+        print(f"\nTalent: {pick_talent()}")
         print("----------------------------\n")
 
 
@@ -71,8 +65,7 @@ def pick_stats(stats_list, amount):
 
 
 def pick_talent():
-    # Not exactly the best solution, since TALENTS is now a duplicate,
-    # have to think of a better solution
+    # Stupid faster, I could have just called this function this way..
     TALENTS = ["All Skilled Up", "Ambidextrous", "Arrow Recovery", "Bigger and better",
                "Comeback Kid", "Demon", "Duck Duck Goose", "Elemental Affinity", "Escapist", "Executioner",
                "Elemental Ranger", "Far Out Man", "Five-Star Diner", "Glass Cannon", "Guerrilla",
@@ -81,7 +74,7 @@ def pick_talent():
                "Stench", "The Pawn", "Torturer", "Unstable", "Walk It Off", "What a Rush"]
 
     # Really simple random pick from talents
-    print(f"\nYour next talent: {choice(TALENTS)}\n")
+    return choice(TALENTS)
 
 
 def check_number_input(chr_number):
@@ -109,7 +102,7 @@ def main():
             else:
                 character_generator()
         elif user_input == "2":
-            pick_talent()
+            print(f"\nYour next talent: {pick_talent()}\n")
         elif user_input == "3":
             print(f"See you later!")
             # either option works
