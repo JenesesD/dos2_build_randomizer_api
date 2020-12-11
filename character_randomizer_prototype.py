@@ -57,8 +57,7 @@ def pick_stats(stats_list, amount):
     picked_stats = []
     # switched to while if there is a duplicate value
     while len(picked_stats) != amount:
-        index = randint(0, len(stats_list) - 1)
-        curr_stat = stats_list[index]
+        curr_stat = choice(stats_list)
         if curr_stat not in picked_stats:
             picked_stats.append(curr_stat)
     return picked_stats
