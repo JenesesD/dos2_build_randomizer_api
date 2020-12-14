@@ -1,9 +1,9 @@
 # For the prototype, I will create a complete randomizer for the game.
-# After creating the base of the api, I will try to apply a ruleset,
-# so it creates a build within the realm of possibility.
+# Scrapped the idea of rulesets, since then what is the point of a
+# randomizer.
 # Since this is the prototype (and for the sake of practice),
-# I will re-create it in Java ruleset and all, and try to make it into
-# an API, for future uses (Discord bot, maybe a React based website)
+# I will re-create it in Java, and try to make it into an API,
+# for future applications (Discord bot, maybe a React based website)
 # (this will be present in the readme, aswell as how to use the api)
 
 # If the randomizer creates a variation that can represent an
@@ -14,37 +14,34 @@ from random import choice, randint
 
 
 def character_generator(chr_number=1):
-    # Generates a character with no regard to any rules
     # Created a general function for picking attributes/abilities
     # Modified the function to run as many times as the given parameter
 
     GENDER = ["Male", "Female"]
+
     # Eternal is not present
-    # modified the list so undead doesn't need a seperate list
+    # Reverted back the list
+    RACE = ["Human", "Elf", "Dwarf", "Lizard"]
 
-    RACE = ["Human", "Elf", "Dwarf", "Lizard",
-            "Undead Human", "Undead Elf", "Undead Dwarf", "Undead Lizard"]
-
-    # moved all list within scope for generalization
+    # Moved most lists within scope for generalization
+    # Need 3 Attributes
     ATTRIBUTES = ["Strength", "Finesse", "Intelligence",
                   "Constitution", "Memory", "Wits"]
 
     # For attributes and abilities duplicates are not possible anymore
+    # Need 2 Abilities
     ABILITIES = ["Dual Wielding", "Ranged", "Single-Handed", "Two-Handed", "Leadership", "Perserverance",
                  "Retribution", "Aerotheurge", "Geomancer", "Huntsman", "Hydrosophist", "Necromancer", "Polymorph",
-                 "Pyrokinetic", "Scoundrel", "Summoning", "Warfare"]  # need 2
+                 "Pyrokinetic", "Scoundrel", "Summoning", "Warfare"]
 
+    # Need 2 Civil Abilities
     CIVIL_ABILITIES = ["Telekinesis", "Loremaster", "Sneaking", "Thievery", "Bartering",
-                       "Persuasion", "Lucky Charm"]  # need 2
-
-    # An idea could be to roll all the players talents that they need to learn throughout the game
-    # (would require extensive ruleset, maybe in the future).
+                       "Persuasion", "Lucky Charm"]
 
     for i in range(chr_number):
         print(f"\nCHARACTER {i + 1}")
         print(f"===========================")
-        print(f"\nCharacter Gender: {choice(GENDER)}")
-        print(f"\nCharacter Race: {choice(RACE)}")
+        print(f"\nCharacter: {choice(GENDER)}{draw_undead()} {choice(RACE)}")
         print(f"\nAttributes: {', '.join(pick_stats(ATTRIBUTES, 3))}")
         print(f"\nAbilities: {', '.join(pick_stats(ABILITIES, 2))}")
         print(
@@ -53,9 +50,19 @@ def character_generator(chr_number=1):
         print("----------------------------\n")
 
 
+def draw_undead():
+    # Simple functon for deciding a character being undead
+    # (Couldn't think of a better soultion)
+    undead = randint(0, 101)
+    if undead > 50:
+        return " Undead"
+    else:
+        return ""
+
+
 def pick_stats(stats_list, amount):
     picked_stats = []
-    # switched to while if there is a duplicate value
+    # Switched to while if there is a duplicate value
     while len(picked_stats) != amount:
         curr_stat = choice(stats_list)
         if curr_stat not in picked_stats:
@@ -95,7 +102,7 @@ def main():
         if user_input == "1":
             # Modification in order to generate multiple starter characters
             chr_number = input("How many characters would you like: ")
-            # if no or wrong input is given the function runs once by default
+            # If no or wrong input is given the function runs once by default
             if check_number_input(chr_number):
                 character_generator(int(chr_number))
             else:
@@ -104,7 +111,7 @@ def main():
             print(f"\nYour next talent: {pick_talent()}\n")
         elif user_input == "3":
             print(f"See you later!")
-            # either option works
+            # Either option works
             run = False
             # exit()
         else:
