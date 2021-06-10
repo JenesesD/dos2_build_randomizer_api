@@ -37,10 +37,13 @@ public class Main {
         persona.setAttributes(raffleStats(ATTRIBUTES, rand, 3));
         persona.setAbilities(raffleStats(ABILITIES, rand, 2));
         persona.setCivilAbilities(raffleStats(CIVIL_ABILITIES, rand,  2));
+        persona.setStartingTalent(raffleTalent(TALENTS, rand));
 
         System.out.println(persona.toString());
+    }
 
-
+    private static String raffleTalent(List<String> talents, Random rand) {
+        return talents.get(rand.nextInt(talents.size()));
     }
 
     private static List<String> raffleStats(List<String> stats, Random rand, int amount) {

@@ -1,12 +1,10 @@
 package randomizer.model;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Persona {
@@ -27,7 +25,11 @@ public class Persona {
         this.attributes = raffledAttributes;
     }
 
-    public void setCivilAbilities(List<String> raffledCivilAbilties) {
-        this.civilAbilities = raffledCivilAbilties;
+    public void setCivilAbilities(List<String> raffledCivilAbilities) {
+        this.civilAbilities = raffledCivilAbilities;
+    }
+
+    public void setStartingTalent(String raffledTalent) {
+        this.startingTalent = raffledTalent;
     }
 }
