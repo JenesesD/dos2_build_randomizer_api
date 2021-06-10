@@ -9,7 +9,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Character {
+public class Persona {
 
     private Gender gender;
     private Race race;
@@ -19,4 +19,15 @@ public class Character {
     private List<String> civilAbilities;
     private String startingTalent;
 
+    public void setAbilities(List<String> raffledAbilities) {
+        this.abilities = raffledAbilities;
+    }
+
+    public void setAttributes(List<String> raffledAttributes) {
+        this.attributes = raffledAttributes;
+    }
+
+    public void setCivilAbilities(List<String> raffledCivilAbilties) {
+        this.civilAbilities = raffledCivilAbilties;
+    }
 }
