@@ -1,4 +1,4 @@
-package randomizer.model;
+package com.randomizer.model;
 
 public enum Race {
     HUMAN,

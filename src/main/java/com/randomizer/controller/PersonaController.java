@@ -1,14 +1,17 @@
-package randomizer;
+package com.randomizer.controller;
 
-import randomizer.model.Persona;
+import com.randomizer.model.Persona;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
+import java.util.Map;
 
-public class Main {
-    public static void main(String[] args) {
+@RestController
+public class PersonaController {
         // For the time being these Lists will be hardcoded here
         // TODO: Create a database around it
 
@@ -32,28 +35,9 @@ public class Main {
                 "Opportunist", "Parry Master", "Pet Pal", "Picture of Health", "Savage Sortilege", "Slingshot",
                 "Stench", "The Pawn", "Torturer", "Unstable", "Walk It Off", "What a Rush");
 
-        Random rand = new Random();
-        Persona persona = new Persona();
-        persona.setAttributes(raffleStats(ATTRIBUTES, rand, 3));
-        persona.setAbilities(raffleStats(ABILITIES, rand, 2));
-        persona.setCivilAbilities(raffleStats(CIVIL_ABILITIES, rand,  2));
-        persona.setStartingTalent(raffleTalent(TALENTS, rand));
 
-        System.out.println(persona.toString());
-    }
-
-    private static String raffleTalent(List<String> talents, Random rand) {
-        return talents.get(rand.nextInt(talents.size()));
-    }
-
-    private static List<String> raffleStats(List<String> stats, Random rand, int amount) {
-        List<String> items = new ArrayList<>();
-        while (items.size() != amount) {
-            String temp = stats.get(rand.nextInt(stats.size()));
-            if (!items.contains(temp)){
-                items.add(temp);
-            }
-        }
-        return items;
+    @GetMapping("/character")
+    public Persona getPersona(@RequestParam(value = "amount", defaultValue = "1") String amount) {
+        return null;
     }
 }
