@@ -6,9 +6,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 public class PersonaController {
@@ -37,7 +35,7 @@ public class PersonaController {
 
 
     @GetMapping("/character")
-    public Persona getPersona(@RequestParam(value = "amount", defaultValue = "1") String amount) {
+    public Integer getPersona(@RequestParam(value = "amount") String amount) {
         return null;
     }
 }
