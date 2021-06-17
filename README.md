@@ -1,4 +1,4 @@
-# Divinity: riginal Sin 2 Character Randomizer
+# Divinity: Original Sin 2 Character Randomizer
 
 
 ### A work in progress API for generating random characters/talents for the game Divinity: Original Sin 2.
