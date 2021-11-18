@@ -12,11 +12,13 @@ public class PersonaStorage {
     @Autowired
     PersonaRepository repository;
 
-    public String getRace(int n) {
-        return repository.getRace(n);
+    public String getRace(int id) {
+        return repository.getRace(id);
     }
 
     public List<String> getAttributes() { return repository.getAttributes(); }
 
     public List<String> getAbilities() { return repository.getAbilities(); }
+
+    public String getCivilAbility(int id) { return repository.getCivilAbility(id); }
 }
