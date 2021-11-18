@@ -38,8 +38,9 @@ public class RandomizerService {
             List<String> abilities = personaStorage.getAbilities();
             String selectedAbilites = joinListsIntoString(randomizeListItems(random, abilities));
 
+            String civilAbility = personaStorage.getCivilAbility(generateRandomNumber(random, 7));
 
-            personas.add(new Persona(i + 1, race, gender, selectedAttributes, selectedAbilites));
+            personas.add(new Persona(i + 1, race, gender, selectedAttributes, selectedAbilites, civilAbility));
         }
         return personas;
     }
