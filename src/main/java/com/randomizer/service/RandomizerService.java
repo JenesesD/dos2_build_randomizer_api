@@ -25,6 +25,7 @@ public class RandomizerService {
         List<Persona> personas = new ArrayList<>();
 
         for (int i = 0; i < n; i++) {
+            // Magic number represents the number of races
             String race = personaStorage.getRace(generateRandomNumber(random, 4));
 
             // Ternary to evaluate the gender of the character
@@ -38,9 +39,13 @@ public class RandomizerService {
             List<String> abilities = personaStorage.getAbilities();
             String selectedAbilites = joinListsIntoString(randomizeListItems(random, abilities));
 
+            // Magic number represents the number of civil abilities
             String civilAbility = personaStorage.getCivilAbility(generateRandomNumber(random, 7));
 
-            personas.add(new Persona(i + 1, race, gender, selectedAttributes, selectedAbilites, civilAbility));
+            // Magic number represents the number of talents
+            String talent = personaStorage.getTalent(generateRandomNumber(random, 34));
+
+            personas.add(new Persona(i + 1, race, gender, selectedAttributes, selectedAbilites, civilAbility, talent));
         }
         return personas;
     }

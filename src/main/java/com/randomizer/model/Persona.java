@@ -14,11 +14,12 @@ public class Persona {
     private final String abilities;
     private final String civilAbility;
 //    private final String skills;
-//    private final String talent;
+    private final String talent;
 //    private final String instrument;
 
-    // String civilAbility, String skills, String talent, String instrument
-    public Persona(Integer id, String race, String gender, String attributes, String abilities, String civilAbility) {
+    // String skills, String talent, String instrument
+    public Persona(Integer id, String race, String gender, String attributes, String abilities,
+                   String civilAbility, String talent) {
         this.id = id;
         this.race = race;
         this.gender = gender;
@@ -26,7 +27,7 @@ public class Persona {
         this.abilities = abilities;
         this.civilAbility = civilAbility;
 //        this.skills = skills;
-//        this.talent = talent;
+        this.talent = talent;
 //        this.instrument = instrument;
     }
 
@@ -57,10 +58,10 @@ public class Persona {
 //    public String getSkills() {
 //        return skills;
 //    }
-//
-//    public String getTalent() {
-//        return talent;
-//    }
+
+    public String getTalent() {
+        return talent;
+    }
 //
 //    public String getInstrument() {
 //        return instrument;
