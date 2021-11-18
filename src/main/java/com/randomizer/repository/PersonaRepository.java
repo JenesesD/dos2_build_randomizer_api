@@ -25,4 +25,8 @@ public interface PersonaRepository extends JpaRepository<Persona, Long> {
     // Query that selects a single civil ability based on the parameter
     @Query(value = "SELECT name FROM civil_abilities WHERE id = :id", nativeQuery = true)
     String getCivilAbility(@Param("id") int id);
+
+    // Query that selects a single talent based on the parameter
+    @Query(value = "SELECT name FROM talents WHERE id = :id", nativeQuery = true)
+    String getTalent(@Param("id") int id);
 }
