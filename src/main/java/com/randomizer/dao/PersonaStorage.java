@@ -17,4 +17,6 @@ public class PersonaStorage {
     }
 
     public List<String> getAttributes() { return repository.getAttributes(); }
+
+    public List<String> getAbilities() { return repository.getAbilities(); }
 }
