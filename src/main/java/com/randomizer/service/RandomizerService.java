@@ -39,11 +39,13 @@ public class RandomizerService {
             String selectedAttributes = joinListsIntoString(randomizeListItems(random, attributes));
 
             // Same with these method calls
-            List<String> abilities = personaStorage.getAbilities();
-            String selectedAbilites = joinListsIntoString(randomizeListItems(random, abilities));
+            List<String> randomAbilities =randomizeListItems(random, personaStorage.getAbilities());
+            String selectedAbilites = joinListsIntoString(randomAbilities);
 
             // Magic number represents the number of civil abilities
             String civilAbility = personaStorage.getCivilAbility(generateRandomNumber(random, 7));
+
+            String skills = joinListsIntoString(randomizeSkills(random, randomAbilities));
 
             // Magic number represents the number of talents
             String talent = personaStorage.getTalent(generateRandomNumber(random, 34));
@@ -51,8 +53,9 @@ public class RandomizerService {
             // 4 = number of instruments
             String instrument = personaStorage.getInstrument(generateRandomNumber(random, 4));
 
+
             personas.add(new Persona(i + 1, race, gender, isUndead, selectedAttributes, selectedAbilites,
-                    civilAbility, talent, instrument));
+                    civilAbility, skills, talent, instrument));
         }
         return personas;
     }
@@ -81,5 +84,38 @@ public class RandomizerService {
             }
         }
         return randomValues;
+    }
+
+    // Method that will randomly select three skills according to the abilities list
+    private List<String> randomizeSkills(Random random, List<String> abilities) {
+        List<String> selectedSkills = new LinkedList<>();
+
+        // Necessary while loop in order to select non-matching values
+        while (selectedSkills.size() != 3) {
+
+            // It is possible to get abilities that don't have corresponding skills,
+            // this evaluation is here so the api doesn't end up in an infinite loop
+            if (abilities.size() == 0) { break; }
+            int randomNumber = random.nextInt(abilities.size());
+            String temp = abilities.get(randomNumber);
+
+            List<String> skills = personaStorage.getSkills(temp);
+
+            // In order to not use a try/catch block, or get an exception
+            // outer if to check the length of the skills list
+            if (skills.size() != 0) {
+                int randNum = random.nextInt(skills.size());
+
+                // Checks if the selected value is already in the selectedSkills list
+                if (!selectedSkills.contains(skills.get(randNum))) {
+                    selectedSkills.add(skills.get(randNum));
+                }
+            } else {
+                // If the code reaches the else clause, that means the selected ability
+                // doesn't have corresponding skills, therefore redundant
+                abilities.remove(randomNumber);
+            }
+        }
+        return selectedSkills;
     }
 }
