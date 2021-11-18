@@ -16,14 +16,17 @@ public class RandomizerService {
     PersonaStorage personaStorage;
 
     public List<Persona> getCharacters(int n) {
-//        Random random = new Random();
+        Random random = new Random();
         List<Persona> personas = new ArrayList<>();
         for (int i = 0; i < n; i++) {
-            String race = personaStorage.getRace(3);
+            int randomNumber = generateRandomNumber(random, 4);
+            String race = personaStorage.getRace(randomNumber);
             personas.add(new Persona(i + 1, race));
         }
         return personas;
     }
 
-
+    private int generateRandomNumber(Random random, int n) {
+        return 1 + random.nextInt((n - 1) + 1);
+    }
 }
