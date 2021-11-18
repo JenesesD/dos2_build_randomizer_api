@@ -26,10 +26,15 @@ public interface PersonaRepository extends JpaRepository<Persona, Long> {
     @Query(value = "SELECT name FROM civil_abilities WHERE id = :id", nativeQuery = true)
     String getCivilAbility(@Param("id") int id);
 
+    // Query that selects all skills where the type is equal with the stored type
+    @Query(value = "SELECT name FROM skills WHERE skill_type = :type", nativeQuery = true)
+    List<String> getSkills(@Param("type") String type);
+
     // Query that selects a single talent based on the parameter
     @Query(value = "SELECT name FROM talents WHERE id = :id", nativeQuery = true)
     String getTalent(@Param("id") int id);
 
+    // Query that selects a single instrument based on the parameter
     @Query(value = "SELECT name FROM instruments WHERE id = :id", nativeQuery = true)
     String getInstrument(@Param("id") int id);
 }
