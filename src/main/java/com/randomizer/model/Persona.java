@@ -9,7 +9,7 @@ public class Persona {
     @Id
     private final Integer id;
     private final String race;
-    // private final String gender;
+    private final String gender;
 //    private final String attributes;
 //    private final String abilities;
 //    private final String civilAbility;
@@ -18,9 +18,10 @@ public class Persona {
 //    private final String instrument;
 
     // String attributes, String abilities, String civilAbility, String skills, String talent, String instrument
-    public Persona(Integer id, String race) {
+    public Persona(Integer id, String race, String gender) {
         this.id = id;
         this.race = race;
+        this.gender = gender;
 //        this.attributes = attributes;
 //        this.abilities = abilities;
 //        this.civilAbility = civilAbility;
@@ -35,6 +36,10 @@ public class Persona {
 
     public String getRace() {
         return race;
+    }
+
+    public String getGender() {
+        return gender;
     }
 
 //    public String getAttributes() {
