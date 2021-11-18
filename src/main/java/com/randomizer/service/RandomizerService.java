@@ -26,10 +26,20 @@ public class RandomizerService {
 
         for (int i = 0; i < n; i++) {
             String race = personaStorage.getRace(generateRandomNumber(random, 4));
+
+            // Ternary to evaluate the gender of the character
             String gender = generateRandomNumber(random, 100) > 50 ? "Male" : "Female";
+
+            // Probably will write a separate method for these method calls
             List<String> attributes = personaStorage.getAttributes();
-            String selectedAttributes = joinListsIntoString(randomizeAttributes(random, attributes));
-            personas.add(new Persona(i + 1, race, gender, selectedAttributes));
+            String selectedAttributes = joinListsIntoString(randomizeListItems(random, attributes));
+
+            // Same with these method calls
+            List<String> abilities = personaStorage.getAbilities();
+            String selectedAbilites = joinListsIntoString(randomizeListItems(random, abilities));
+
+
+            personas.add(new Persona(i + 1, race, gender, selectedAttributes, selectedAbilites));
         }
         return personas;
     }
@@ -44,19 +54,19 @@ public class RandomizerService {
     // Joins list items together
     private String joinListsIntoString(List<String> list) { return String.join(", ", list); }
 
-    // Method that will randomly select two non-matching attributes
-    private List<String> randomizeAttributes(Random random, List<String> attributes) {
-        List<String> randomAttributes = new LinkedList<>();
+    // Method that will randomly select two non-matching values
+    private List<String> randomizeListItems(Random random, List<String> list) {
+        List<String> randomValues = new LinkedList<>();
 
         // Necessary while loop in order to select non-matching values
-        while (randomAttributes.size() != 2) {
-            int randomNumber = random.nextInt(attributes.size());
+        while (randomValues.size() != 2) {
+            int randomNumber = random.nextInt(list.size());
 
-            // Checks if the attribute selected is already in the randomAttributes List
-            if (!randomAttributes.contains(attributes.get(randomNumber))) {
-                randomAttributes.add(attributes.get(randomNumber));
+            // Checks if the selected value is already in the randomValues List
+            if (!randomValues.contains(list.get(randomNumber))) {
+                randomValues.add(list.get(randomNumber));
             }
         }
-        return randomAttributes;
+        return randomValues;
     }
 }
