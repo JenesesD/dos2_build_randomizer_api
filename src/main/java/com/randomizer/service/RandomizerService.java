@@ -45,7 +45,11 @@ public class RandomizerService {
             // Magic number represents the number of talents
             String talent = personaStorage.getTalent(generateRandomNumber(random, 34));
 
-            personas.add(new Persona(i + 1, race, gender, selectedAttributes, selectedAbilites, civilAbility, talent));
+            // 4 = number of instruments
+            String instrument = personaStorage.getInstrument(generateRandomNumber(random, 4));
+
+            personas.add(new Persona(i + 1, race, gender, selectedAttributes, selectedAbilites,
+                    civilAbility, talent, instrument));
         }
         return personas;
     }
