@@ -9,6 +9,7 @@ public class Persona {
     @Id
     private final Integer id;
     private final String race;
+    private final boolean undead;
     private final String gender;
     private final String attributes;
     private final String abilities;
@@ -18,11 +19,12 @@ public class Persona {
     private final String instrument;
 
     // String skills, String talent, String instrument
-    public Persona(Integer id, String race, String gender, String attributes, String abilities,
+    public Persona(Integer id, String race, String gender, boolean undead, String attributes, String abilities,
                    String civilAbility, String talent, String instrument) {
         this.id = id;
         this.race = race;
         this.gender = gender;
+        this.undead = undead;
         this.attributes = attributes;
         this.abilities = abilities;
         this.civilAbility = civilAbility;
@@ -43,6 +45,10 @@ public class Persona {
         return gender;
     }
 
+    public boolean isUndead() {
+        return undead;
+    }
+
     public String getAttributes() {
         return attributes;
     }
@@ -54,9 +60,9 @@ public class Persona {
     public String getCivilAbility() {
         return civilAbility;
     }
-
 //    public String getSkills() {
 //        return skills;
+
 //    }
 
     public String getTalent() {

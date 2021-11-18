@@ -31,6 +31,9 @@ public class RandomizerService {
             // Ternary to evaluate the gender of the character
             String gender = generateRandomNumber(random, 100) > 50 ? "Male" : "Female";
 
+            // Evaluate the characters status as an undead
+            boolean isUndead = generateRandomNumber(random, 100) > 50;
+
             // Probably will write a separate method for these method calls
             List<String> attributes = personaStorage.getAttributes();
             String selectedAttributes = joinListsIntoString(randomizeListItems(random, attributes));
@@ -48,7 +51,7 @@ public class RandomizerService {
             // 4 = number of instruments
             String instrument = personaStorage.getInstrument(generateRandomNumber(random, 4));
 
-            personas.add(new Persona(i + 1, race, gender, selectedAttributes, selectedAbilites,
+            personas.add(new Persona(i + 1, race, gender, isUndead, selectedAttributes, selectedAbilites,
                     civilAbility, talent, instrument));
         }
         return personas;
