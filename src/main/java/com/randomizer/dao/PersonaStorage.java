@@ -21,4 +21,6 @@ public class PersonaStorage {
     public List<String> getAbilities() { return repository.getAbilities(); }
 
     public String getCivilAbility(int id) { return repository.getCivilAbility(id); }
+
+    public String getTalent(int id) { return repository.getTalent(id); }
 }
