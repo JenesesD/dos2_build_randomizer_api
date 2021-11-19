@@ -1,6 +1,7 @@
 package com.randomizer.controller;
 
 import com.randomizer.model.Persona;
+import com.randomizer.model.Talent;
 import com.randomizer.service.RandomizerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,5 +22,5 @@ public class PersonaController {
     }
 
     @GetMapping("/talent")
-    public String getTalent() { return randomizerService.getRandomTalent(); }
+    public Talent getTalent() { return randomizerService.getRandomTalent(); }
 }

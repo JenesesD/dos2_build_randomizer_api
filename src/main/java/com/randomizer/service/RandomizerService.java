@@ -2,6 +2,7 @@ package com.randomizer.service;
 
 import com.randomizer.dao.PersonaStorage;
 import com.randomizer.model.Persona;
+import com.randomizer.model.Talent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -57,10 +58,10 @@ public class RandomizerService {
 
     // Second endpoints service function, so if someone needs a random talent,
     // they don't have to generate a whole new character
-    public String getRandomTalent() {
+    public Talent getRandomTalent() {
         Random random = new Random();
         int randomNumber = generateRandomNumber(random,34);
-        return personaStorage.getTalent(randomNumber);
+        return new Talent(1, personaStorage.getTalent(randomNumber));
     }
 
     // Method to help comprehension and readability
