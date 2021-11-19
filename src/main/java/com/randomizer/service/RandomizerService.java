@@ -56,7 +56,7 @@ public class RandomizerService {
         return personas;
     }
 
-    // Second endpoints service function, so if someone needs a random talent,
+    // Second endpoint service function, so if someone needs a random talent,
     // they don't have to generate a whole new character
     public Talent getRandomTalent() {
         Random random = new Random();
