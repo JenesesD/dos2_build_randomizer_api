@@ -30,20 +30,16 @@ public class RandomizerService {
         for (int i = 0; i < checkedParam; i++) {
             // Magic number represents the number of races
             String race = personaStorage.getRace(generateRandomNumber(random, 4));
-
-            // Ternary to evaluate the gender of the character
-            String gender = generateRandomNumber(random, 100) > 50 ? "Male" : "Female";
-
-            // Evaluate the characters status as an undead
-            boolean isUndead = generateRandomNumber(random, 100) > 50;
+            String gender = getGender(random);
+            boolean isUndead = undeadStatus(random);
 
             // Probably will write a separate method for these method calls
-            List<String> attributes = personaStorage.getAttributes();
-            String selectedAttributes = joinListsIntoString(randomizeListItems(random, attributes));
+            List<String> randomAttributes = personaStorage.getAttributes();
+            String selectedAttributes = joinListsIntoString(randomizeListItems(random, randomAttributes));
 
             // Same with these method calls
-            List<String> randomAbilities =randomizeListItems(random, personaStorage.getAbilities());
-            String selectedAbilites = joinListsIntoString(randomAbilities);
+            List<String> randomAbilities = randomizeListItems(random, personaStorage.getAbilities());
+            String selectedAbilities = joinListsIntoString(randomAbilities);
 
             // Magic number represents the number of civil abilities
             String civilAbility = personaStorage.getCivilAbility(generateRandomNumber(random, 7));
@@ -56,8 +52,7 @@ public class RandomizerService {
             // 4 = number of instruments
             String instrument = personaStorage.getInstrument(generateRandomNumber(random, 4));
 
-
-            personas.add(new Persona(i + 1, race, gender, isUndead, selectedAttributes, selectedAbilites,
+            personas.add(new Persona(i + 1, race, gender, isUndead, selectedAttributes, selectedAbilities,
                     civilAbility, skills, talent, instrument));
         }
         return personas;
@@ -81,6 +76,12 @@ public class RandomizerService {
         if (result > 4) { result = 4; }
         return result;
     }
+
+    // Method to evaluate the gender of the character
+    private String getGender(Random random) { return generateRandomNumber(random, 100) > 50 ? "Male" : "Female";  }
+
+    // Evaluate the characters status as an undead
+    private boolean undeadStatus(Random random) { return generateRandomNumber(random, 100) > 50; }
 
     // Method that will randomly select two non-matching values
     private List<String> randomizeListItems(Random random, List<String> list) {
