@@ -24,7 +24,10 @@ public class RandomizerService {
         // List that will contain the generated characters
         List<Persona> personas = new ArrayList<>();
 
-        for (int i = 0; i < n; i++) {
+        //
+        int checkedParam = paramChecker(n);
+
+        for (int i = 0; i < checkedParam; i++) {
             // Magic number represents the number of races
             String race = personaStorage.getRace(generateRandomNumber(random, 4));
 
@@ -70,6 +73,15 @@ public class RandomizerService {
     // Joins list items together
     private String joinListsIntoString(List<String> list) { return String.join(", ", list); }
 
+    // Method that checks if the parameter given at the endpoint is suitable or not
+    // if for some reason it's not usable, it switches the value accordingly
+    private int paramChecker(int param) {
+        int result = param;
+        if (result < 0) { result = 1; }
+        if (result > 4) { result = 4; }
+        return result;
+    }
+
     // Method that will randomly select two non-matching values
     private List<String> randomizeListItems(Random random, List<String> list) {
         List<String> randomValues = new LinkedList<>();
@@ -94,7 +106,7 @@ public class RandomizerService {
         while (selectedSkills.size() != 3) {
 
             // It is possible to get abilities that don't have corresponding skills,
-            // this evaluation is here so the api doesn't end up in an infinite loop
+            // this "if" is here so the api doesn't end up in an infinite loop
             if (abilities.size() == 0) { break; }
             int randomNumber = random.nextInt(abilities.size());
             String temp = abilities.get(randomNumber);
@@ -102,7 +114,7 @@ public class RandomizerService {
             List<String> skills = personaStorage.getSkills(temp);
 
             // In order to not use a try/catch block, or get an exception
-            // outer if to check the length of the skills list
+            // outer "if" to check the length of the skills list
             if (skills.size() != 0) {
                 int randNum = random.nextInt(skills.size());
 
@@ -111,7 +123,8 @@ public class RandomizerService {
                     selectedSkills.add(skills.get(randNum));
                 }
             } else {
-                // If the code reaches the else clause, that means the selected ability
+
+                // If the code reaches the "else" clause, that means the selected ability
                 // doesn't have corresponding skills, therefore redundant
                 abilities.remove(randomNumber);
             }
