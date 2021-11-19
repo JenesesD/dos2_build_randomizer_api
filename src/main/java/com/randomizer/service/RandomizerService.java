@@ -24,7 +24,7 @@ public class RandomizerService {
         // List that will contain the generated characters
         List<Persona> personas = new ArrayList<>();
 
-        //
+        // Checks the param provided for the method and changes the value accordingly
         int checkedParam = paramChecker(n);
 
         for (int i = 0; i < checkedParam; i++) {
@@ -32,28 +32,25 @@ public class RandomizerService {
             String race = personaStorage.getRace(generateRandomNumber(random, 4));
             String gender = getGender(random);
             boolean isUndead = undeadStatus(random);
+            String selectedAttributes = getRandomAttributes(random);
 
-            // Probably will write a separate method for these method calls
-            List<String> randomAttributes = personaStorage.getAttributes();
-            String selectedAttributes = joinListsIntoString(randomizeListItems(random, randomAttributes));
-
-            // Same with these method calls
+            // Left these two lines, since the randomAbilities variable is needed elsewhere
             List<String> randomAbilities = randomizeListItems(random, personaStorage.getAbilities());
             String selectedAbilities = joinListsIntoString(randomAbilities);
 
             // Magic number represents the number of civil abilities
             String civilAbility = personaStorage.getCivilAbility(generateRandomNumber(random, 7));
 
-            String skills = joinListsIntoString(randomizeSkills(random, randomAbilities));
+            // Randomizes and creates a string with the randomized skills
+            String selectedSkills = joinListsIntoString(randomizeSkills(random, randomAbilities));
 
             // Magic number represents the number of talents
             String talent = personaStorage.getTalent(generateRandomNumber(random, 34));
 
-            // 4 = number of instruments
+            // Magic number represents the number of instruments
             String instrument = personaStorage.getInstrument(generateRandomNumber(random, 4));
-
             personas.add(new Persona(i + 1, race, gender, isUndead, selectedAttributes, selectedAbilities,
-                    civilAbility, skills, talent, instrument));
+                    civilAbility, selectedSkills, talent, instrument));
         }
         return personas;
     }
@@ -83,6 +80,11 @@ public class RandomizerService {
     // Evaluate the characters status as an undead
     private boolean undeadStatus(Random random) { return generateRandomNumber(random, 100) > 50; }
 
+    private String getRandomAttributes(Random random) {
+        List<String> randomAttributes = personaStorage.getAttributes();
+        return joinListsIntoString(randomizeListItems(random, randomAttributes));
+    }
+
     // Method that will randomly select two non-matching values
     private List<String> randomizeListItems(Random random, List<String> list) {
         List<String> randomValues = new LinkedList<>();
@@ -108,7 +110,10 @@ public class RandomizerService {
 
             // It is possible to get abilities that don't have corresponding skills,
             // this "if" is here so the api doesn't end up in an infinite loop
-            if (abilities.size() == 0) { break; }
+            if (abilities.size() == 0) {
+                selectedSkills.add("None");
+                break;
+            }
             int randomNumber = random.nextInt(abilities.size());
             String temp = abilities.get(randomNumber);
 
