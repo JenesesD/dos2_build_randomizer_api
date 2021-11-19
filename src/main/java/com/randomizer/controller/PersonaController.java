@@ -19,4 +19,7 @@ public class PersonaController {
     public List<Persona> getPersona(@RequestParam(value = "amount", defaultValue = "1")Integer amount) {
         return randomizerService.getCharacters(amount);
     }
+
+    @GetMapping("/talent")
+    public String getTalent() { return randomizerService.getRandomTalent(); }
 }

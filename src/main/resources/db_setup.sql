@@ -62,7 +62,7 @@ INSERT INTO abilities (id, name) VALUES (1, 'Dual-Wielding');
 INSERT INTO abilities (id, name) VALUES (2, 'Ranged');
 INSERT INTO abilities (id, name) VALUES (3, 'Single-Handed');
 INSERT INTO abilities (id, name) VALUES (4, 'Two-Handed');
-INSERT INTO abilities (id, name) VALUES (5, 'LeaderShip');
+INSERT INTO abilities (id, name) VALUES (5, 'Leadership');
 INSERT INTO abilities (id, name) VALUES (6, 'Perseverance');
 INSERT INTO abilities (id, name) VALUES (7, 'Retribution');
 INSERT INTO abilities (id, name) VALUES (8, 'Huntsman');

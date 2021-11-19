@@ -55,6 +55,14 @@ public class RandomizerService {
         return personas;
     }
 
+    // Second endpoints service function, so if someone needs a random talent,
+    // they don't have to generate a whole new character
+    public String getRandomTalent() {
+        Random random = new Random();
+        int randomNumber = generateRandomNumber(random,34);
+        return personaStorage.getTalent(randomNumber);
+    }
+
     // Method to help comprehension and readability
     // Generates a random number between 1 and n (inclusive)
     private int generateRandomNumber(Random random, int n) {
@@ -129,7 +137,6 @@ public class RandomizerService {
                     selectedSkills.add(skills.get(randNum));
                 }
             } else {
-
                 // If the code reaches the "else" clause, that means the selected ability
                 // doesn't have corresponding skills, therefore redundant
                 abilities.remove(randomNumber);
