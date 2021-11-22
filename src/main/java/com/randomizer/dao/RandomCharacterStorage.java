@@ -1,16 +1,16 @@
 package com.randomizer.dao;
 
-import com.randomizer.repository.PersonaRepository;
+import com.randomizer.repository.RandomCharacterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public class PersonaStorage {
+public class RandomCharacterStorage {
 
     @Autowired
-    PersonaRepository repository;
+    RandomCharacterRepository repository;
 
     public String getRace(int id) {
         return repository.getRace(id);

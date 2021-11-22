@@ -1,13 +1,13 @@
 package com.randomizer.repository;
 
-import com.randomizer.model.Persona;
+import com.randomizer.model.RandomCharacter;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface PersonaRepository extends JpaRepository<Persona, Long> {
+public interface RandomCharacterRepository extends JpaRepository<RandomCharacter, Long> {
 
     // Query that selects a single race based on the parameter id
     @Query(value = "SELECT name FROM races WHERE id = :id", nativeQuery = true)

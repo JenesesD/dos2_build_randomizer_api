@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
-public class Persona {
+public class RandomCharacter {
 
     @Id
     private final Integer id;
@@ -18,8 +18,8 @@ public class Persona {
     private final String talent;
     private final String instrument;
 
-    public Persona(Integer id, String race, String gender, boolean undead, String attributes, String abilities,
-                   String civilAbility, String skills, String talent, String instrument) {
+    public RandomCharacter(Integer id, String race, String gender, boolean undead, String attributes, String abilities,
+                           String civilAbility, String skills, String talent, String instrument) {
         this.id = id;
         this.race = race;
         this.gender = gender;

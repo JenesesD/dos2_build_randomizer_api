@@ -1,7 +1,7 @@
 package com.randomizer.service;
 
-import com.randomizer.dao.PersonaStorage;
-import com.randomizer.model.Persona;
+import com.randomizer.dao.RandomCharacterStorage;
+import com.randomizer.model.RandomCharacter;
 import com.randomizer.model.Talent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,15 +15,15 @@ import java.util.Random;
 public class RandomizerService {
 
     @Autowired
-    PersonaStorage personaStorage;
+    RandomCharacterStorage personaStorage;
 
-    public List<Persona> getCharacters(int n) {
+    public List<RandomCharacter> getCharacters(int n) {
 
         // Create an instance of Random, so it can be passed to auxiliary methods
         Random random = new Random();
 
         // List that will contain the generated characters
-        List<Persona> personas = new ArrayList<>();
+        List<RandomCharacter> randomCharacters = new ArrayList<>();
 
         // Checks the param provided for the method and changes the value accordingly
         int checkedParam = paramChecker(n);
@@ -50,10 +50,10 @@ public class RandomizerService {
 
             // Magic number represents the number of instruments
             String instrument = personaStorage.getInstrument(generateRandomNumber(random, 4));
-            personas.add(new Persona(i + 1, race, gender, isUndead, selectedAttributes, selectedAbilities,
+            randomCharacters.add(new RandomCharacter(i, race, gender, isUndead, selectedAttributes, selectedAbilities,
                     civilAbility, selectedSkills, talent, instrument));
         }
-        return personas;
+        return randomCharacters;
     }
 
     // Second endpoint service function, so if someone needs a random talent,

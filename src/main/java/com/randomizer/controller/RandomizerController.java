@@ -1,6 +1,6 @@
 package com.randomizer.controller;
 
-import com.randomizer.model.Persona;
+import com.randomizer.model.RandomCharacter;
 import com.randomizer.model.Talent;
 import com.randomizer.service.RandomizerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-public class PersonaController {
+public class RandomizerController {
 
     @Autowired
     RandomizerService randomizerService;
 
     @GetMapping("/character")
-    public List<Persona> getPersona(@RequestParam(value = "amount", defaultValue = "1")Integer amount) {
+    public List<RandomCharacter> getPersona(@RequestParam(value = "amount", defaultValue = "1")Integer amount) {
         return randomizerService.getCharacters(amount);
     }
 
