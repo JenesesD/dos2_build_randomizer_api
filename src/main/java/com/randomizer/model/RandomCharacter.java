@@ -1,7 +1,9 @@
 package com.randomizer.model;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.util.List;
 
 @Entity
 public class RandomCharacter {
@@ -11,15 +13,21 @@ public class RandomCharacter {
     private final String race;
     private final String gender;
     private final boolean undead;
-    private final String attributes;
-    private final String abilities;
+
+    @ElementCollection
+    private final List<String> attributes;
+
+    @ElementCollection
+    private final List<String> abilities;
     private final String civilAbility;
-    private final String skills;
+
+    @ElementCollection
+    private final List<String> skills;
     private final String talent;
     private final String instrument;
 
-    public RandomCharacter(Integer id, String race, String gender, boolean undead, String attributes, String abilities,
-                           String civilAbility, String skills, String talent, String instrument) {
+    public RandomCharacter(Integer id, String race, String gender, boolean undead, List<String> attributes, List<String> abilities,
+                           String civilAbility, List<String> skills, String talent, String instrument) {
         this.id = id;
         this.race = race;
         this.gender = gender;
@@ -48,11 +56,11 @@ public class RandomCharacter {
         return undead;
     }
 
-    public String getAttributes() {
+    public List<String> getAttributes() {
         return attributes;
     }
 
-    public String getAbilities() {
+    public List<String> getAbilities() {
         return abilities;
     }
 
@@ -60,7 +68,7 @@ public class RandomCharacter {
         return civilAbility;
     }
 
-    public String getSkills() {
+    public List<String> getSkills() {
         return skills;
     }
 

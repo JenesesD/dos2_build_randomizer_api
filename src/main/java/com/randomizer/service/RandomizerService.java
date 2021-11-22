@@ -15,7 +15,7 @@ import java.util.Random;
 public class RandomizerService {
 
     @Autowired
-    RandomCharacterStorage personaStorage;
+    RandomCharacterStorage randomCharacterStorage;
 
     public List<RandomCharacter> getCharacters(int n) {
 
@@ -30,26 +30,25 @@ public class RandomizerService {
 
         for (int i = 0; i < checkedParam; i++) {
             // Magic number represents the number of races
-            String race = personaStorage.getRace(generateRandomNumber(random, 4));
+            String race = randomCharacterStorage.getRace(generateRandomNumber(random, 4));
             String gender = getGender(random);
             boolean isUndead = undeadStatus(random);
-            String selectedAttributes = getRandomAttributes(random);
 
-            // Left these two lines, since the randomAbilities variable is needed elsewhere
-            List<String> randomAbilities = randomizeListItems(random, personaStorage.getAbilities());
-            String selectedAbilities = joinListsIntoString(randomAbilities);
+            // Removed the Stringification method call, the requester can handle the data how they please
+            List<String> selectedAttributes = randomizeListItems(random, randomCharacterStorage.getAttributes());
+            List<String> selectedAbilities = randomizeListItems(random, randomCharacterStorage.getAbilities());
 
             // Magic number represents the number of civil abilities
-            String civilAbility = personaStorage.getCivilAbility(generateRandomNumber(random, 7));
+            String civilAbility = randomCharacterStorage.getCivilAbility(generateRandomNumber(random, 7));
 
-            // Randomizes and creates a string with the randomized skills
-            String selectedSkills = joinListsIntoString(randomizeSkills(random, randomAbilities));
+            // Randomizes skills depending on the selected abilities
+            List<String> selectedSkills = randomizeSkills(random, selectedAbilities);
 
             // Magic number represents the number of talents
-            String talent = personaStorage.getTalent(generateRandomNumber(random, 34));
+            String talent = randomCharacterStorage.getTalent(generateRandomNumber(random, 34));
 
             // Magic number represents the number of instruments
-            String instrument = personaStorage.getInstrument(generateRandomNumber(random, 4));
+            String instrument = randomCharacterStorage.getInstrument(generateRandomNumber(random, 4));
             randomCharacters.add(new RandomCharacter(i, race, gender, isUndead, selectedAttributes, selectedAbilities,
                     civilAbility, selectedSkills, talent, instrument));
         }
@@ -61,7 +60,7 @@ public class RandomizerService {
     public Talent getRandomTalent() {
         Random random = new Random();
         int randomNumber = generateRandomNumber(random,34);
-        return new Talent(1, personaStorage.getTalent(randomNumber));
+        return new Talent(1, randomCharacterStorage.getTalent(randomNumber));
     }
 
     // Method to help comprehension and readability
@@ -69,10 +68,6 @@ public class RandomizerService {
     private int generateRandomNumber(Random random, int n) {
         return 1 + random.nextInt((n - 1) + 1);
     }
-
-    // Method to help comprehension and readability
-    // Joins list items together
-    private String joinListsIntoString(List<String> list) { return String.join(", ", list); }
 
     // Method that checks if the parameter given at the endpoint is suitable or not
     // if for some reason it's not usable, it switches the value accordingly
@@ -88,11 +83,6 @@ public class RandomizerService {
 
     // Evaluate the characters status as an undead
     private boolean undeadStatus(Random random) { return generateRandomNumber(random, 100) > 50; }
-
-    private String getRandomAttributes(Random random) {
-        List<String> randomAttributes = personaStorage.getAttributes();
-        return joinListsIntoString(randomizeListItems(random, randomAttributes));
-    }
 
     // Method that will randomly select two non-matching values
     private List<String> randomizeListItems(Random random, List<String> list) {
@@ -114,19 +104,22 @@ public class RandomizerService {
     private List<String> randomizeSkills(Random random, List<String> abilities) {
         List<String> selectedSkills = new LinkedList<>();
 
+        // Create a deep copy of abilities
+        List<String> copy = createClone(abilities);
+
         // Necessary while loop in order to select non-matching values
         while (selectedSkills.size() != 3) {
 
             // It is possible to get abilities that don't have corresponding skills,
             // this "if" is here so the api doesn't end up in an infinite loop
-            if (abilities.size() == 0) {
+            if (copy.size() == 0) {
                 selectedSkills.add("None");
                 break;
             }
-            int randomNumber = random.nextInt(abilities.size());
-            String temp = abilities.get(randomNumber);
+            int randomNumber = random.nextInt(copy.size());
+            String temp = copy.get(randomNumber);
 
-            List<String> skills = personaStorage.getSkills(temp);
+            List<String> skills = randomCharacterStorage.getSkills(temp);
 
             // In order to not use a try/catch block, or get an exception
             // outer "if" to check the length of the skills list
@@ -140,9 +133,13 @@ public class RandomizerService {
             } else {
                 // If the code reaches the "else" clause, that means the selected ability
                 // doesn't have corresponding skills, therefore redundant
-                abilities.remove(randomNumber);
+                copy.remove(randomNumber);
             }
         }
         return selectedSkills;
+    }
+
+    private List<String> createClone(List<String> abilities) {
+        return new ArrayList<>(abilities);
     }
 }
