@@ -17,7 +17,7 @@ public class RandomizerController {
     RandomizerService randomizerService;
 
     @GetMapping("/character")
-    public List<RandomCharacter> getPersona(@RequestParam(value = "amount", defaultValue = "1")Integer amount) {
+    public List<RandomCharacter> getRandomCharacter(@RequestParam(value = "amount", defaultValue = "1")Integer amount) {
         return randomizerService.getCharacters(amount);
     }
 

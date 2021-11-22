@@ -112,10 +112,8 @@ public class RandomizerService {
 
             // It is possible to get abilities that don't have corresponding skills,
             // this "if" is here so the api doesn't end up in an infinite loop
-            if (copy.size() == 0) {
-                selectedSkills.add("None");
-                break;
-            }
+            if (copy.size() == 0) { selectedSkills.add("None"); break; }
+
             int randomNumber = random.nextInt(copy.size());
             String temp = copy.get(randomNumber);
 
