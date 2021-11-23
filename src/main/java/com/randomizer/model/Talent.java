@@ -1,6 +1,5 @@
 package com.randomizer.model;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
