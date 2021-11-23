@@ -1,26 +1,18 @@
 package com.randomizer.model;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+@Data
 @Entity
+@AllArgsConstructor
 public class Talent {
 
     @Id
-    private final Integer id;
-    private final String name;
-
-    public Talent(Integer id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Integer getId() {
-        return id;
-    }
+    private Integer id;
+    private String name;
 }
