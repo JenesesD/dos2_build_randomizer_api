@@ -1,7 +1,6 @@
 package com.randomizer.controller;
 
 import com.randomizer.model.RandomCharacter;
-import com.randomizer.model.Talent;
 import com.randomizer.service.RandomizerService;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -19,7 +18,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -92,6 +90,31 @@ class RandomizerControllerTest {
                         .value(Matchers.containsInAnyOrder("Chloroform", "Bouncing Shield", "Backlash")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].talent").value("Pet Pal"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].instrument").value("Cello"));
+    }
+
+    @Test
+    void getRandomCharacterListLengthWithInputBetweenOneAndFour() throws Exception {
+        when(service.getCharacters(2)).thenReturn(List.of(new RandomCharacter(), new RandomCharacter()));
+
+        this.mvc.perform((MockMvcRequestBuilders.get("/character?amount=2")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.size()").value(2));
+    }
+
+    @Test
+    void getRandomCharacterListLengthWithInputLargerThanFour() throws Exception {
+        when(service.getCharacters(6)).thenReturn(List.of(new RandomCharacter(), new RandomCharacter(),
+                new RandomCharacter(), new RandomCharacter()));
+
+        this.mvc.perform((MockMvcRequestBuilders.get("/character?amount=6")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.size()").value(4));
+    }
+
+    @Test
+    void getRandomCharactersListLengthWithInputLessThanOne() throws Exception {
+        when(service.getCharacters(0)).thenReturn(List.of(new RandomCharacter()));
+
+        this.mvc.perform((MockMvcRequestBuilders.get("/character?amount=0")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.size()").value(1));
     }
 
     @Test
