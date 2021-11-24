@@ -60,7 +60,7 @@ public class RandomizerService {
     public Talent getRandomTalent() {
         Random random = new Random();
         int randomNumber = generateRandomNumber(random,34);
-        return new Talent(1, randomCharacterStorage.getTalent(randomNumber));
+        return new Talent(0, randomCharacterStorage.getTalent(randomNumber));
     }
 
     // Method to help comprehension and readability
