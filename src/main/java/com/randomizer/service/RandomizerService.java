@@ -65,13 +65,13 @@ public class RandomizerService {
 
     // Method to help comprehension and readability
     // Generates a random number between 1 and n (inclusive)
-    private int generateRandomNumber(Random random, int n) {
+    protected int generateRandomNumber(Random random, int n) {
         return 1 + random.nextInt((n - 1) + 1);
     }
 
     // Method that checks if the parameter given at the endpoint is suitable or not
     // if for some reason it's not usable, it switches the value accordingly
-    private int paramChecker(int param) {
+    protected int paramChecker(int param) {
         int result = param;
         if (result < 0) { result = 1; }
         if (result > 4) { result = 4; }
@@ -79,13 +79,13 @@ public class RandomizerService {
     }
 
     // Method to evaluate the gender of the character
-    private String getGender(Random random) { return generateRandomNumber(random, 100) > 50 ? "Male" : "Female";  }
+    protected String getGender(Random random) { return generateRandomNumber(random, 100) > 50 ? "Male" : "Female";  }
 
     // Evaluate the characters status as an undead
-    private boolean undeadStatus(Random random) { return generateRandomNumber(random, 100) > 50; }
+    protected boolean undeadStatus(Random random) { return generateRandomNumber(random, 100) > 50; }
 
     // Method that will randomly select two non-matching values
-    private List<String> randomizeListItems(Random random, List<String> list) {
+    protected List<String> randomizeListItems(Random random, List<String> list) {
         List<String> randomValues = new LinkedList<>();
 
         // Necessary while loop in order to select non-matching values
@@ -101,7 +101,7 @@ public class RandomizerService {
     }
 
     // Method that will randomly select three skills according to the abilities list
-    private List<String> randomizeSkills(Random random, List<String> abilities) {
+    protected List<String> randomizeSkills(Random random, List<String> abilities) {
         List<String> selectedSkills = new LinkedList<>();
 
         // Create a deep copy of abilities
@@ -137,7 +137,7 @@ public class RandomizerService {
         return selectedSkills;
     }
 
-    private List<String> createClone(List<String> abilities) {
+    protected List<String> createClone(List<String> abilities) {
         return new ArrayList<>(abilities);
     }
 }

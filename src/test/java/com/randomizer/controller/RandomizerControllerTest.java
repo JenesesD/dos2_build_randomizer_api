@@ -1,6 +1,7 @@
 package com.randomizer.controller;
 
 import com.randomizer.model.RandomCharacter;
+import com.randomizer.model.Talent;
 import com.randomizer.service.RandomizerService;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -38,6 +39,9 @@ class RandomizerControllerTest {
     void createMockMvc() {
         assertNotNull(mvc);
     }
+
+    @Test
+    void createController() { assertNotNull(controller); }
 
     @Test
     void getRandomCharacterStatusCodeWithoutParamTest() throws Exception {
@@ -127,5 +131,13 @@ class RandomizerControllerTest {
     void getRandomTalentContentTypeTest() throws Exception {
         mvc.perform(MockMvcRequestBuilders.get("/talent"))
                 .andExpect(content().contentType("application/json"));
+    }
+
+    @Test
+    void shouldReturnRandomTalentWithValues() throws Exception {
+        when(service.getRandomTalent()).thenReturn(new Talent(0, "Pet Pal"));
+
+        this.mvc.perform(MockMvcRequestBuilders.get("/talent"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.size()").value(2));
     }
 }
