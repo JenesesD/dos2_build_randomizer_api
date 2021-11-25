@@ -105,7 +105,7 @@ public class RandomizerService {
         List<String> selectedSkills = new LinkedList<>();
 
         // Create a deep copy of abilities
-        List<String> copy = createClone(abilities);
+        List<String> copy = createListClone(abilities);
 
         // Necessary while loop in order to select non-matching values
         while (selectedSkills.size() != 3) {
@@ -137,7 +137,7 @@ public class RandomizerService {
         return selectedSkills;
     }
 
-    protected List<String> createClone(List<String> abilities) {
+    protected List<String> createListClone(List<String> abilities) {
         return new ArrayList<>(abilities);
     }
 }
