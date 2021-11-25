@@ -73,7 +73,7 @@ public class RandomizerService {
     // if for some reason it's not usable, it switches the value accordingly
     protected int paramChecker(int param) {
         int result = param;
-        if (result < 0) { result = 1; }
+        if (result < 1) { result = 1; }
         if (result > 4) { result = 4; }
         return result;
     }
