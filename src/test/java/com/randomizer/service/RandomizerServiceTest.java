@@ -16,6 +16,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.instanceOf;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
@@ -36,6 +38,8 @@ class RandomizerServiceTest {
     @BeforeAll
     void init() {
         random = new Random();
+        when(storage.getAbilities()).thenReturn(new ArrayList<String>(
+                Arrays.asList("Strength", "Intelligence", "Wits", "Memory", "Constitution", "Finesse")) );
     }
 
     @Test
@@ -48,9 +52,16 @@ class RandomizerServiceTest {
     }
 
     @Test
-    void getRandomTalent() {
+    void getRandomTalentReturnNotNull() {
+        when(storage.getTalent(2)).thenReturn("Ambidextrous");
+        String talent = storage.getTalent(2);
+        assertNotNull(talent);
     }
 
+    @Test
+    void getGenderReturnStringValue() {
+        assertThat(service.getGender(random), instanceOf(String.class));
+    }
 
     @Test
     void paramCheckerWithInputBetweenOneAndFour() {
@@ -71,10 +82,7 @@ class RandomizerServiceTest {
     }
 
     @Test
-    void randomizeListItemsMethodReturnsNotNull() {
-        when(storage.getAbilities()).thenReturn(new ArrayList<String>(
-                Arrays.asList("Strength", "Intelligence", "Wits", "Memory", "Constitution", "Finesse")) );
-
+    void randomizeListItemsMethodReturnNotNull() {
         List<String> items = storage.getAbilities();
         List<String> selectedItems = service.randomizeListItems(random, items);
         assertNotNull(selectedItems);
@@ -82,9 +90,6 @@ class RandomizerServiceTest {
 
     @Test
     void randomizeListItemsMethodReturnListWithSizeOfTwo() {
-        when(storage.getAbilities()).thenReturn(new ArrayList<String>(
-                Arrays.asList("Strength", "Intelligence", "Wits", "Memory", "Constitution", "Finesse")) );
-
         List<String> items = storage.getAbilities();
         Integer selectedItemsLength = service.randomizeListItems(random, items).size();
         assertEquals(2, selectedItemsLength);
