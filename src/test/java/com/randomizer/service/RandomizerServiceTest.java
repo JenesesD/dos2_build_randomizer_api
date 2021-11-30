@@ -38,8 +38,13 @@ class RandomizerServiceTest {
     @BeforeAll
     void init() {
         random = new Random();
-        when(storage.getAbilities()).thenReturn(new ArrayList<String>(
-                Arrays.asList("Strength", "Intelligence", "Wits", "Memory", "Constitution", "Finesse")) );
+        when(storage.getSkills("Warfare")).thenReturn(
+                new ArrayList<>(Arrays.asList("Battering Ram",  "Battle Stomp", "Bouncing Shield", "Crippling Blow")));
+
+        when(storage.getAbilities()).thenReturn(new ArrayList<>(Arrays.asList(
+                "Strength", "Intelligence", "Wits", "Constitution", "Memory", "Finesse"
+        )));
+        when(storage.getTalent(2)).thenReturn("Ambidextrous");
     }
 
     @Test
@@ -53,14 +58,23 @@ class RandomizerServiceTest {
 
     @Test
     void getRandomTalentReturnNotNull() {
-        when(storage.getTalent(2)).thenReturn("Ambidextrous");
         String talent = storage.getTalent(2);
         assertNotNull(talent);
     }
 
     @Test
+    void getRandomTalentReturnStringValue() {
+        assertThat(storage.getTalent(2), instanceOf(String.class));
+    }
+
+    @Test
     void getGenderReturnStringValue() {
         assertThat(service.getGender(random), instanceOf(String.class));
+    }
+
+    @Test
+    void getUndeadReturnBooleanValue() {
+        assertThat(service.undeadStatus(random), instanceOf(Boolean.class));
     }
 
     @Test
@@ -82,24 +96,37 @@ class RandomizerServiceTest {
     }
 
     @Test
-    void randomizeListItemsMethodReturnNotNull() {
+    void randomizeListItemsReturnNotNull() {
         List<String> items = storage.getAbilities();
         List<String> selectedItems = service.randomizeListItems(random, items);
         assertNotNull(selectedItems);
     }
 
     @Test
-    void randomizeListItemsMethodReturnListWithSizeOfTwo() {
+    void randomizeListItemsReturnListWithSizeOfTwo() {
         List<String> items = storage.getAbilities();
         Integer selectedItemsLength = service.randomizeListItems(random, items).size();
         assertEquals(2, selectedItemsLength);
     }
 
     @Test
-    void randomizeSkills() {
+    void randomizeSkillsReturnNotNull() {
+        List<String> skills = new ArrayList<>(Arrays.asList("Warfare", "Leadership"));
+        List<String> selectedSkills = service.randomizeSkills(random, skills);
+        assertNotNull(selectedSkills);
     }
 
     @Test
-    void createListClone() {
+    void randomizeSkillsReturnListWithSizeThree() {
+        List<String> skills = new ArrayList<>(Arrays.asList("Warfare", "Leadership"));
+        Integer selectedSkillsLength = service.randomizeSkills(random, skills).size();
+        assertEquals(3, selectedSkillsLength);
+    }
+
+    @Test
+    void createListCloneEqualsToOriginalList() {
+        List<String> items = new ArrayList<>(
+                Arrays.asList("Strength", "Intelligence", "Wits", "Memory", "Constitution", "Finesse"));
+        assertEquals(service.createListClone(items), items);
     }
 }
