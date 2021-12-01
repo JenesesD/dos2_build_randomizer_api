@@ -1,7 +1,9 @@
 package com.randomizer.service;
 
 import com.randomizer.dao.RandomCharacterStorage;
+import com.randomizer.model.RandomCharacter;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,15 +37,17 @@ class RandomizerServiceTest {
 
     private Random random;
 
-    @BeforeAll
+    @BeforeEach
     void init() {
         random = new Random();
         when(storage.getSkills("Warfare")).thenReturn(
-                new ArrayList<>(Arrays.asList("Battering Ram",  "Battle Stomp", "Bouncing Shield", "Crippling Blow")));
+                Arrays.asList("Battering Ram",  "Battle Stomp", "Bouncing Shield", "Crippling Blow"));
 
-        when(storage.getAbilities()).thenReturn(new ArrayList<>(Arrays.asList(
+        when(storage.getAttributes()).thenReturn(Arrays.asList(
                 "Strength", "Intelligence", "Wits", "Constitution", "Memory", "Finesse"
-        )));
+        ));
+
+        when(storage.getAbilities()).thenReturn(Arrays.asList("Warfare", "Finesse"));
         when(storage.getTalent(2)).thenReturn("Ambidextrous");
     }
 
@@ -52,8 +56,37 @@ class RandomizerServiceTest {
         assertNotNull(service);
     }
 
+
+    // Figured out why IllegalArgumentException was thrown, had to mock other storage methods
+    // that getCharacters uses in order for it to work
     @Test
-    void getCharacters() {
+    void getCharactersReturnValueInstanceOfRandomCharacter() {
+        List<RandomCharacter> characters = service.getCharacters(2);
+        assertThat(characters.get(0), instanceOf(RandomCharacter.class));
+    }
+
+
+    @Test
+    void getCharactersReturnNotNull() {
+        assertNotNull(service.getCharacters(2));
+    }
+
+    @Test
+    void getCharacterReturnProperAmountOfCharacters() {
+        List<RandomCharacter> characters = service.getCharacters(2);
+        assertEquals(2, characters.size());
+    }
+
+    @Test
+    void getCharacterReturnProperAmountOfCharactersWithInputLargerThanFour() {
+        List<RandomCharacter> characters = service.getCharacters(6);
+        assertEquals(4, characters.size());
+    }
+
+    @Test
+    void getCharacterReturnProperAmountOfCharactersWithInputSmallerThanOne() {
+        List<RandomCharacter> characters = service.getCharacters(0);
+        assertEquals(1, characters.size());
     }
 
     @Test
@@ -97,36 +130,36 @@ class RandomizerServiceTest {
 
     @Test
     void randomizeListItemsReturnNotNull() {
-        List<String> items = storage.getAbilities();
+        List<String> items = storage.getAttributes();
         List<String> selectedItems = service.randomizeListItems(random, items);
         assertNotNull(selectedItems);
     }
 
     @Test
     void randomizeListItemsReturnListWithSizeOfTwo() {
-        List<String> items = storage.getAbilities();
+        List<String> items = storage.getAttributes();
         Integer selectedItemsLength = service.randomizeListItems(random, items).size();
         assertEquals(2, selectedItemsLength);
     }
 
     @Test
     void randomizeSkillsReturnNotNull() {
-        List<String> skills = new ArrayList<>(Arrays.asList("Warfare", "Leadership"));
+        List<String> skills = Arrays.asList("Warfare", "Leadership");
         List<String> selectedSkills = service.randomizeSkills(random, skills);
         assertNotNull(selectedSkills);
     }
 
     @Test
     void randomizeSkillsReturnListWithSizeThree() {
-        List<String> skills = new ArrayList<>(Arrays.asList("Warfare", "Leadership"));
+        List<String> skills = Arrays.asList("Warfare", "Leadership");
         Integer selectedSkillsLength = service.randomizeSkills(random, skills).size();
         assertEquals(3, selectedSkillsLength);
     }
 
     @Test
     void createListCloneEqualsToOriginalList() {
-        List<String> items = new ArrayList<>(
-                Arrays.asList("Strength", "Intelligence", "Wits", "Memory", "Constitution", "Finesse"));
+        List<String> items =
+                Arrays.asList("Strength", "Intelligence", "Wits", "Memory", "Constitution", "Finesse");
         assertEquals(service.createListClone(items), items);
     }
 }
