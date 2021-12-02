@@ -55,8 +55,17 @@ class RandomCharacterRepositoryTest {
     }
 
     @Test
-    void getAbilities() {
+    void getAbilitiesReturnNotNull() {
+        assertNotNull(repository.getAbilities());
     }
+
+    @Test
+    void getAbilitiesReturnListValue() {
+        assertThat(repository.getAbilities(), instanceOf(List.class));
+    }
+
+    @Test
+    void getAbilitiesListWithAppropriateLength() { assertEquals(17, repository.getAbilities().size()); }
 
     @Test
     void getCivilAbility() {
