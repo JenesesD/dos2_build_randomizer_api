@@ -2,7 +2,6 @@ package com.randomizer.service;
 
 import com.randomizer.dao.RandomCharacterStorage;
 import com.randomizer.model.RandomCharacter;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -12,8 +11,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -58,7 +55,7 @@ class RandomizerServiceTest {
 
 
     // Figured out why IllegalArgumentException was thrown, had to mock other storage methods
-    // that getCharacters uses in order for it to work
+    // that getCharacters uses in order for it to run
     @Test
     void getCharactersReturnValueInstanceOfRandomCharacter() {
         List<RandomCharacter> characters = service.getCharacters(2);

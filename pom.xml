@@ -8,7 +8,7 @@
         <version>2.2.5.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.codecool</groupId>
+    <groupId>com.randomizer</groupId>
     <artifactId>dos2randomizer</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>dos2RandomizerApi</name>
