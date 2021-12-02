@@ -85,7 +85,16 @@ class RandomCharacterRepositoryTest {
     void getCivilAbilityReturnNullWithInvalidId() {assertNull(repository.getCivilAbility(9)); }
 
     @Test
-    void getSkills() {
+    void getSkillsReturnNotNull() {
+        assertNotNull(repository.getSkills("Warfare"));
+    }
+
+    @Test
+    void getSkillsReturnListValue() { assertThat(repository.getSkills("Warfare"), instanceOf(List.class)); }
+
+    @Test
+    void getSkillsReturnListWithAppropriateLength() {
+        assertEquals(3, repository.getSkills("Warfare").size());
     }
 
     @Test
