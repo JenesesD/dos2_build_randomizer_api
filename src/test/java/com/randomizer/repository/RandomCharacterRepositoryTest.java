@@ -68,8 +68,21 @@ class RandomCharacterRepositoryTest {
     void getAbilitiesListWithAppropriateLength() { assertEquals(17, repository.getAbilities().size()); }
 
     @Test
-    void getCivilAbility() {
+    void getCivilAbilityReturnNotNull() { assertNotNull(repository.getCivilAbility(2));  }
+
+    @Test
+    void getCivilAbilityReturnStringValue() { assertThat(repository.getCivilAbility(2), instanceOf(String.class)); }
+
+    @Test
+    void getCivilAbilityReturnAppropriateValue() {
+        List<String> civilAbilities = Arrays.asList(
+                "Bartering", "Lucky Charm", "Persuasion", "Loremaster", "Telekinesis", "Sneaking", "Thievery");
+        String civilAbility = repository.getCivilAbility(2);
+        assertTrue(civilAbilities.contains(civilAbility));
     }
+
+    @Test
+    void getCivilAbilityReturnNullWithInvalidId() {assertNull(repository.getCivilAbility(9)); }
 
     @Test
     void getSkills() {
