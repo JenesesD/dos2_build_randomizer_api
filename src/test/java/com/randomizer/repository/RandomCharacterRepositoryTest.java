@@ -20,7 +20,7 @@ class RandomCharacterRepositoryTest {
     private RandomCharacterRepository repository;
 
     @Test
-    void getRaceByIdNotNull() {
+    void getRaceByIdReturnNotNull() {
         assertNotNull(repository.getRace(3));
     }
 
@@ -38,9 +38,20 @@ class RandomCharacterRepositoryTest {
     void getRaceByIdReturnNullWithInvalidId() {
         assertNull(repository.getRace(8));
     }
-    
+
     @Test
-    void getAttributes() {
+    void getAttributesReturnNotNull() {
+        assertNotNull(repository.getAttributes());
+    }
+
+    @Test
+    void getAttributesReturnListValue() {
+        assertThat(repository.getAttributes(), instanceOf(List.class));
+    }
+
+    @Test
+    void getAttributesReturnListWithAppropriateLength() {
+        assertEquals(6, repository.getAttributes().size());
     }
 
     @Test
