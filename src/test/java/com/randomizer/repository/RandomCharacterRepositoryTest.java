@@ -94,7 +94,7 @@ class RandomCharacterRepositoryTest {
 
     @Test
     void getSkillsReturnListWithAppropriateLength() {
-        assertEquals(3, repository.getSkills("Warfare").size());
+        assertEquals(4, repository.getSkills("Warfare").size());
     }
 
     @Test
