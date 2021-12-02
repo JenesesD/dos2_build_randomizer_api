@@ -89,8 +89,13 @@ class RandomCharacterRepositoryTest {
     }
 
     @Test
-    void getTalent() {
-    }
+    void getTalentReturnNotNull() { assertNotNull(repository.getTalent(8)); }
+
+    @Test
+    void getTalentReturnStringValue() { assertThat(repository.getTalent(8), instanceOf(String.class)); }
+
+    @Test
+    void getTalentReturnNullWithInvalidId() { assertNull(repository.getCivilAbility(88)); }
 
     @Test
     void getInstrument() {
