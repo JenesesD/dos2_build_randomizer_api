@@ -98,6 +98,18 @@ class RandomCharacterRepositoryTest {
     void getTalentReturnNullWithInvalidId() { assertNull(repository.getCivilAbility(88)); }
 
     @Test
-    void getInstrument() {
+    void getInstrumentReturnNotNull() { assertNotNull(repository.getInstrument(2)); }
+
+    @Test
+    void getInstrumentReturnStringValue() { assertThat(repository.getInstrument(2), instanceOf(String.class)); }
+
+    @Test
+    void getInstrumentReturnAppropriateValue() {
+        List<String> instruments = Arrays.asList("Cello", "Tambura", "Bansuri", "Oud");
+        String instrument = repository.getInstrument(2);
+        assertTrue(instruments.contains(instrument));
     }
+
+    @Test
+    void getInstrumentReturnNullWithInvalidId() { assertNull(repository.getInstrument(9)); }
 }
